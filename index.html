@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKIN KITCHEN | مطبخ البشرة - أول Customized Skincare Bar في مصر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- الهيدر المتجاوب مع خانة البحث السريع -->
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="#" onclick="location.reload()" class="logo">
+                <span class="logo-icon">🌿</span>
+                <div>
+                    <h1>SKIN KITCHEN</h1>
+                    <span>مطبخ البشرة</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#hero">الرئيسية</a>
+                <a href="#custom-bar">صمّم سيرومك</a>
+                <a href="#products">المنتجات</a>
+                <a href="#before-after">قبل وبعد</a>
+                <a href="#delivery-info">التوصيل</a>
+                <a href="#about-us" onclick="toggleAboutUs(event)">من نحن</a>
+                <a href="#reviews">آراء العملاء</a>
+            </nav>
+
+            <!-- سيرش من فوق -->
+            <div class="top-search-box">
+                <input type="text" id="top-search-input" onkeyup="filterProducts()" placeholder="🔍 ابحثي عن سيروم أو مكون...">
+            </div>
+
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    🛒 <span id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي (Hero Section) مع فيديو تركيب المنتج وبديل الصورة M.jpeg -->
+    <section id="hero" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <span class="badge">أول Customized Skincare Bar في مصر 🇪🇬</span>
+                <h2>غَذِّ بشرتك وشعرك بمكونات طبيعية طازجة تُركَّب أمامك</h2>
+                <p>وداعاً للمنتجات الجاهزة! في مطبخ البشرة، نركب لكِ السيروم الخاص بنوع بشرتك أو شعرك من 5 مكونات طبيعية خام وبشفافية كاملة.</p>
+                <div class="hero-btns">
+                    <a href="#custom-bar" class="btn-primary">🧪 ابدأ الاختبار وصمّم خلطتك</a>
+                    <a href="#products" class="btn-outline">استكشف المنتجات</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <video id="mixing-video" class="live-mixing-media" autoplay muted loop playsinline poster="M.jpeg" onerror="this.outerHTML='<img src=\'M.jpeg\' alt=\'تركيب السيروم\' class=\'live-mixing-media\'>'">
+                        <source src="M.mp4" type="video/mp4">
+                    </video>
+                    <h3>تركيب السيروم أمامك 🎬</h3>
+                    <p>100% مكونات طبيعية خام • عبوة 30 مل قابلة لإعادة الملء</p>
+                    <div class="price-tag">250 ج.م فقط</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم اختبار البشرة والشعر التفاعلي -->
+    <section id="custom-bar" class="custom-bar-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🧪 مختبر تركيب السيروم المخصص</h2>
+                <p>أجيبي على 3 أسئلة بسيطة لنحدد لكِ التركيبة المثالية</p>
+            </div>
+
+            <div class="quiz-box">
+                <form id="skin-quiz-form" onsubmit="generateCustomSerum(event)">
+                    <div class="quiz-grid">
+                        <div class="form-group">
+                            <label>1. ما هو نوع بشرتك أو احتياجك؟</label>
+                            <select id="q-skin-type" required>
+                                <option value="oily">بشرة دهنية / مختلطة</option>
+                                <option value="dull">بشرة عادية / باهتة ومجهدة</option>
+                                <option value="sensitive">بشرة حساسة / سريعة الاحمرار</option>
+                                <option value="hair">سيروم الشعر (SS)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>2. ما هي مشكلتك الأساسية؟</label>
+                            <select id="q-problem" required>
+                                <option value="acne">حبوب ومسام واسعة ودهون زائدة</option>
+                                <option value="glow">بهتان وتصبغات وعدم توحد اللون</option>
+                                <option value="redness">احمرار وتحسس وجفاف</option>
+                                <option value="hairfall">تلف وتقصف وضعف بصيلات الشعر (SS)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>3. هل لديكِ حساسية من أي مكون طبيعي؟</label>
+                            <input type="text" id="q-allergy" placeholder="مثال: زيت شجرة الشاي، أو اكتبي (لا يوجد)" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary full-width">✨ استخراج تركيبتي الخاصة</button>
+                </form>
+
+                <div id="quiz-result" class="quiz-result" style="display: none;">
+                    <div class="result-badge">تركيبتك جاهزة للتحضير!</div>
+                    <h3 id="res-title"></h3>
+                    <p id="res-ingredients"></p>
+                    <p id="res-allergy-note" class="allergy-note"></p>
+                    <div class="result-footer">
+                        <span class="res-price">250 ج.م (30 مل)</span>
+                        <button id="res-add-btn" class="btn-primary">أضف تركيبتي للسلة 🛒</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المنتجات الأساسية -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>خلطات مطبخ البشرة والشعر 🌿</h2>
+                <p>تركيبات مدروسة من 5 مكونات طبيعية خام</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- المنتج 1 -->
+                <div class="product-card" data-search="حبوب دهنية مختلطة شجرة الشاي نياسيناميد صبار">
+                    <div class="card-badge">للبشرة الدهنية والمختلطة</div>
+                    <img src="M.jpeg" alt="سيروم الحبوب" class="product-thumb" onerror="this.src='https://via.placeholder.com/300x180?text=M.jpeg'">
+                    <h3>سيروم الحبوب وتنظيم الدهون</h3>
+                    <p class="ingredients"><strong>المكونات:</strong> زيت شجرة الشاي + نياسيناميد + جل صبار + ماء ورد + فيتامين E</p>
+                    <p class="benefit">يقلل الحبوب ويتحكم في إفراز الدهون دون تجفيف البشرة.</p>
+                    <div class="card-footer">
+                        <span class="price">250 ج.م</span>
+                        <button class="btn-secondary" onclick="addToCart('oily')">أضف للسلة 🛒</button>
+                    </div>
+                </div>
+
+                <!-- المنتج 2 -->
+                <div class="product-card" data-search="نضارة باهتة تفتيح فيتامين سي هيالورونيك">
+                    <div class="card-badge">للبشرة الباهتة والمجهدة</div>
+                    <img src="M.jpeg" alt="سيروم النضارة" class="product-thumb" onerror="this.src='https://via.placeholder.com/300x180?text=M.jpeg'">
+                    <h3>سيروم النضارة والتفتيح الطبيعي</h3>
+                    <p class="ingredients"><strong>المكونات:</strong> فيتامين C + هيالورونيك أسيد + ماء ورد + جلسرين + فيتامين E</p>
+                    <p class="benefit">يعطي إشراقة فورية وتفتيحاً طبيعياً ويوحد لون البشرة.</p>
+                    <div class="card-footer">
+                        <span class="price">250 ج.م</span>
+                        <button class="btn-secondary" onclick="addToCart('dull')">أضف للسلة 🛒</button>
+                    </div>
+                </div>
+
+                <!-- المنتج 3 -->
+                <div class="product-card" data-search="حساسة احمرار شوفان بابونج بانثينول">
+                    <div class="card-badge">للبشرة الحساسة</div>
+                    <img src="M.jpeg" alt="سيروم البشرة الحساسة" class="product-thumb" onerror="this.src='https://via.placeholder.com/300x180?text=M.jpeg'">
+                    <h3>سيروم تهدئة البشرة الحساسة</h3>
+                    <p class="ingredients"><strong>المكونات:</strong> ماء شوفان + بابونج + بانثينول + جل صبار + فيتامين E</p>
+                    <p class="benefit">يهدئ الاحمرار والتحسس ويرطب البشرة بلطف وأمان.</p>
+                    <div class="card-footer">
+                        <span class="price">250 ج.م</span>
+                        <button class="btn-secondary" onclick="addToCart('sensitive')">أضف للسلة 🛒</button>
+                    </div>
+                </div>
+
+                <!-- المنتج 4: SS بصورة ss.jpeg -->
+                <div class="product-card" data-search="ss شعر تساقط هيشان روزماري أرجان جوجوبا بيوتين">
+                    <div class="card-badge">سيروم الشعر SS</div>
+                    <img src="ss.jpeg" alt="سيروم SS" class="product-thumb" onerror="this.src='https://via.placeholder.com/300x180?text=ss.jpeg'">
+                    <h3>SS</h3>
+                    <p class="ingredients"><strong>المكونات:</strong> زيت إكليل الجبل (روزماري) + زيت أرجان + زيت جوجوبا + بيوتين + فيتامين E</p>
+                    <p class="benefit">يقلل التساقط والهيشان ويعطي لمعاناً ونعومة فائقة للشعر.</p>
+                    <div class="card-footer">
+                        <span class="price">250 ج.م</span>
+                        <button class="btn-secondary" onclick="addToCart('hair')">أضف للسلة 🛒</button>
+                    </div>
+                </div>
+            </div>
+            <p id="no-search-results" class="no-results" style="display: none;">لا توجد منتجات مطابقة لبحثك حالياً 🌿</p>
+        </div>
+    </section>
+
+    <!-- قسم قبل وبعد (A.jpeg و B.jpeg) -->
+    <section id="before-after" class="ba-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>نتائج حقيقية خلال 14 يوماً فقط ✨</h2>
+                <p>تأثير سيروم الحبوب المخصص على البشرة الدهنية المعرضة للحبوب</p>
+            </div>
+
+            <div class="ba-grid">
+                <div class="ba-card">
+                    <span class="ba-label before-tag">قبل الاستخدام (اليوم 1)</span>
+                    <img src="A.jpeg" alt="البشرة قبل استخدام السيروم" onerror="this.src='https://via.placeholder.com/400x260?text=A.jpeg'">
+                    <p>التهابات وحبوب نشطة مع زيادة إفراز الدهون في البشرة.</p>
+                </div>
+
+                <div class="ba-card">
+                    <span class="ba-label after-tag">بعد الاستخدام بـ 14 يوم</span>
+                    <img src="B.jpeg" alt="البشرة بعد استخدام السيروم بـ 14 يوم" onerror="this.src='https://via.placeholder.com/400x260?text=B.jpeg'">
+                    <p>هدوء تام للحبوب، توازن إفراز الدهون، وبشرة صافية ومشرقة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم طرق التوصيل -->
+    <section id="delivery-info" class="delivery-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🚚 طرق التوصيل والاستلام</h2>
+                <p>خيارات مرنة وسريعة لتصلك تركيبتك الطازجة أينما كنتِ</p>
+            </div>
+
+            <div class="delivery-grid">
+                <div class="delivery-card">
+                    <div class="delivery-icon">🏠</div>
+                    <h3>توصيل للمنزل (داخل المدينة)</h3>
+                    <p>توصيل مباشر خلال 24 إلى 48 ساعة من تحضير السيروم الطازج.</p>
+                    <span class="delivery-fee">رسوم التوصيل: 30 ج.م</span>
+                </div>
+
+                <div class="delivery-card">
+                    <div class="delivery-icon">📦</div>
+                    <h3>شحن لجميع المحافظات</h3>
+                    <p>شحن آمن ومغلف بعناية خلال 2 إلى 4 أيام عمل مع متابعة الشحنة.</p>
+                    <span class="delivery-fee">رسوم الشحن: 50 ج.م</span>
+                </div>
+
+                <div class="delivery-card">
+                    <div class="delivery-icon">🧪</div>
+                    <h3>استلام مباشر من SKIN KITCHEN Bar</h3>
+                    <p>احضري بنفسك وشاهدي تركيب سيرومك أمامك أو أعيدي ملء عبوتك القديمة.</p>
+                    <span class="delivery-fee">استلام مجاني (0 ج.م)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم نظام إعادة الملء (Refill) -->
+    <section id="refill" class="refill-section">
+        <div class="container refill-box">
+            <span class="badge">نظام صديق للبيئة ♻️ Zero Waste</span>
+            <h2>خلصتِ زجاجتك؟ ارجعي املئيها بخصم خاص!</h2>
+            <p>احتفظي بزجاجتك الـ 30 مل واطلبي إعادة الملء (Refill) بنفس تركيبتك أو بتركيبة جديدة بسعر مخفض.</p>
+            <button class="btn-primary" onclick="addToCart('refill')">اطلب إعادة ملء (Refill) - 210 ج.م ♻️</button>
+        </div>
+    </section>
+
+    <!-- قسم من نحن (يظهر فقط عند الضغط على من نحن) -->
+    <section id="about-us" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">جامعة جنوب الوادي • كلية التجارة • قسم نظم معلومات الأعمال</span>
+                <h2>من نحن - فريق مشروع SKIN KITCHEN 🎓</h2>
+                <p>مشروع ريادة أعمال • <strong>رقم المجموعة: 114</strong> • العام الجامعي 2025 - 2026</p>
+            </div>
+
+            <div class="supervisor-wrapper">
+                <div class="team-card supervisor-card">
+                    <div class="avatar-box">
+                        <img src="D.jpeg" alt="دكتور سعيد نظمي" onerror="this.src='https://via.placeholder.com/150?text=D.jpeg'">
+                    </div>
+                    <span class="role-badge">تحت إشراف</span>
+                    <h3>الدكتور / سعيد نظمي</h3>
+                    <p>مدرس إدارة الأعمال - المشرف الأكاديمي</p>
+                </div>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="avatar-box">
+                        <img src="L.jpeg" alt="لبني أحمد عبد الرازق" onerror="this.src='https://via.placeholder.com/150?text=L.jpeg'">
+                    </div>
+                    <span class="role-badge">عضوة بالفريق</span>
+                    <h3>لبني أحمد عبد الرازق</h3>
+                    <p>نظم معلومات الأعمال - مجموعة 114</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="avatar-box">
+                        <img src="S.jpeg" alt="ساره جابر محمود" onerror="this.src='https://via.placeholder.com/150?text=S.jpeg'">
+                    </div>
+                    <span class="role-badge">عضوة بالفريق</span>
+                    <h3>ساره جابر محمود</h3>
+                    <p>نظم معلومات الأعمال - مجموعة 114</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="avatar-box">
+                        <img src="N.jpeg" alt="ندي حسن سيد" onerror="this.src='https://via.placeholder.com/150?text=N.jpeg'">
+                    </div>
+                    <span class="role-badge">عضوة بالفريق</span>
+                    <h3>ندي حسن سيد</h3>
+                    <p>نظم معلومات الأعمال - مجموعة 114</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم آراء وتقييمات العملاء -->
+    <section id="reviews" class="reviews-section">
+        <div class="container">
+            <div class="reviews-header">
+                <div>
+                    <h2>تجارب عميلات مطبخ البشرة ✨</h2>
+                    <p>آراء حقيقية بعد تجربة التركيبات الطبيعية</p>
+                </div>
+                <button class="btn-primary" onclick="document.getElementById('feedback-modal').style.display='flex'">➕ أضف تقييمك</button>
+            </div>
+
+            <div id="reviews-grid" class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-top">
+                        <strong>مريم محمود</strong>
+                        <span>⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p>"فكرة إن السيروم يتركب مخصوص لبشرتي فرقت معايا جداً! سيروم الحبوب جاب نتيجة معايا في أسبوعين."</p>
+                    <span class="review-date">منذ يومين</span>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-top">
+                        <strong>سلمى طارق</strong>
+                        <span>⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p>"سيروم SS تحفة وخفيف ومش بيلزق، وفكرة الـ Refill عبقرية وبتوفر كتير."</p>
+                    <span class="review-date">منذ 5 أيام</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر المتكامل بنظام الأعمدة -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <h3>SKIN KITCHEN</h3>
+                <span class="footer-sub">مطبخ البشرة • أول Customized Skincare Bar في مصر</span>
+                <p>تركيب سيرومات طازجة من 5 مكونات طبيعية خام أمامك مع نظام Refill صديق للبيئة.</p>
+                <p class="footer-meta">جامعة جنوب الوادي • كلية التجارة • نظم معلومات الأعمال • مجموعة 114</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>تواصل معنا</h4>
+                <ul class="footer-links">
+                    <li>📞 01000000000</li>
+                    <li>💬 <a href="https://wa.me/201000000000" target="_blank">WhatsApp</a></li>
+                    <li>✉️ skinkitchen.eg@gmail.com</li>
+                    <li>📱 فودافون كاش: 01000000000</li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>تابعنا</h4>
+                <ul class="footer-links">
+                    <li>🎵 <a href="#reviews">TikTok</a></li>
+                    <li>📸 <a href="#products">Instagram</a></li>
+                    <li>📘 <a href="#about-us" onclick="toggleAboutUs(event)">Facebook</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>روابط سريعة</h4>
+                <ul class="footer-links">
+                    <li><a href="#about-us" onclick="toggleAboutUs(event)">من نحن</a></li>
+                    <li><a href="#custom-bar">الأسئلة الشائعة</a></li>
+                    <li><a href="#refill">نظام Refill وسياسة الخصوصية</a></li>
+                    <li><a href="#delivery-info">الشروط والأحكام</a></li>
+                    <li><a href="#cart-sidebar" onclick="toggleCart(); return false;">تتبع الطلب</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col newsletter-col">
+                <h4>اشترك في النشرة</h4>
+                <p>صلكِ جديد الخلطات الطبيعية وعروض إعادة الملء (Refill).</p>
+                <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                    <input type="email" id="newsletter-email" placeholder="البريد الإلكتروني" required>
+                    <button type="submit">إرسال</button>
+                </form>
+                <small id="newsletter-msg" class="newsletter-msg"></small>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>© 2026 جميع الحقوق محفوظة لـ SKIN KITCHEN - مطبخ البشرة • بإشراف د. سعيد نظمي</p>
+        </div>
+    </footer>
+
+    <!-- مساعد الرد التلقائي (Auto-Reply Bot) -->
+    <div id="auto-reply-widget" class="auto-reply-widget">
+        <div class="bot-header">
+            <span>🤖 مساعد مطبخ البشرة (رد تلقائي)</span>
+            <button onclick="toggleAutoReply()" class="bot-close">&times;</button>
+        </div>
+        <div id="bot-messages" class="bot-messages">
+            <div class="bot-msg">أهلاً بكِ في SKIN KITCHEN 🌿! اختاري سؤالاً أو اكتبي استفسارك وسأرد عليكِ فوراً:</div>
+            <div class="quick-replies">
+                <button onclick="sendQuickReply('الأسعار')">💰 الأسعار ونظام Refill</button>
+                <button onclick="sendQuickReply('التركيب')">🧪 إزاي بيتم تركيب السيروم؟</button>
+                <button onclick="sendQuickReply('التوصيل')">🚚 طرق التوصيل والشحن</button>
+                <button onclick="sendQuickReply('الدفع')">💳 طرق الدفع المتاحة</button>
+            </div>
+        </div>
+        <form class="bot-input-form" onsubmit="handleBotInput(event)">
+            <input type="text" id="bot-input" placeholder="اكتبي سؤالك هنا..." required>
+            <button type="submit">إرسال</button>
+        </form>
+    </div>
+
+    <!-- زرار فتح الرد التلقائي + زرار واتساب الأخضر العائم -->
+    <div class="floating-actions">
+        <button onclick="toggleAutoReply()" class="bot-float-btn" title="رد تلقائي فوري">
+            🤖 <span>رد تلقائي</span>
+        </button>
+
+        <a href="https://wa.me/201000000000?text=أهلاً%20SKIN%20KITCHEN%20🌿%20حابب%20أطلب%20سيروم%20مخصص" target="_blank" class="whatsapp-float" title="اطلب عبر واتساب">
+            <svg viewBox="0 0 32 32" width="24" height="24" fill="white">
+                <path d="M16 2C8.28 2 2 8.28 2 16c0 2.47.65 4.88 1.88 7L2 30l7.2-1.85C11.24 29.36 13.6 30 16 30c7.72 0 14-6.28 14-14S23.72 2 16 2zm7.6 19.78c-.32.9-1.86 1.72-2.58 1.83-.68.1-1.54.15-2.48-.15-.57-.18-1.3-.43-2.24-.84-3.95-1.71-6.53-5.68-6.73-5.94-.2-.26-1.61-2.14-1.61-4.08s1.02-2.9 1.38-3.3c.36-.4.79-.5 1.05-.5.26 0 .53 0 .76.01.24.01.57-.09.89.68.32.79 1.11 2.71 1.21 2.91.1.2.16.43.03.69-.13.26-.2.43-.4.66-.2.23-.42.51-.6.69-.2.2-.41.41-.18.81.23.4 1.03 1.7 2.21 2.75 1.52 1.35 2.8 1.77 3.2 1.97.4.2.63.17.86-.1.23-.26 1-1.16 1.26-1.56.26-.4.53-.33.89-.2.36.13 2.31 1.09 2.71 1.29.4.2.66.3.76.46.1.16.1.93-.22 1.83z"/>
+            </svg>
+            <span>اطلب واتساب</span>
+        </a>
+    </div>
+
+    <!-- نافذة إضافة تقييم -->
+    <div id="feedback-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <span class="close-modal" onclick="document.getElementById('feedback-modal').style.display='none'">&times;</span>
+            <h3>شاركينا تجربتك مع SKIN KITCHEN ✨</h3>
+            <form onsubmit="handleFeedbackSubmit(event)">
+                <div class="form-group">
+                    <label>الاسم:</label>
+                    <input type="text" id="fb-name" required placeholder="اكتبي اسمك">
+                </div>
+                <div class="form-group">
+                    <label>التقييم:</label>
+                    <select id="fb-rating">
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5) ممتاز جداً</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5) جيد جداً</option>
+                        <option value="3">⭐⭐⭐ (3/5) جيد</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>تجربتك مع السيروم:</label>
+                    <textarea id="fb-comment" rows="3" required placeholder="احكي لنا عن نتيجة السيروم..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-outline" onclick="document.getElementById('feedback-modal').style.display='none'">إلغاء</button>
+                    <button type="submit" class="btn-primary">نشر التقييم</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- القائمة الجانبية لسلة التسوق مع طرق التوصيل وبوابات الدفع -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>سلة مشترياتك 🛒</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+
+        <div id="cart-items" class="cart-items"></div>
+
+        <div class="cart-footer">
+            <!-- اختيار طريقة التوصيل -->
+            <div class="payment-box">
+                <label style="font-weight: 700; display:block; margin-bottom: 6px;">🚚 اختاري طريقة التوصيل:</label>
+                <select id="delivery-method" onchange="saveAndRenderCart()" class="payment-select">
+                    <option value="home">🏠 توصيل للمنزل (+30 ج.م)</option>
+                    <option value="governorates">📦 شحن للمحافظات (+50 ج.م)</option>
+                    <option value="pickup">🧪 استلام من SKIN KITCHEN Bar (مجاني)</option>
+                </select>
+                <div id="delivery-summary" class="payment-details">
+                    <p>المنتجات: <span id="cart-subtotal">0</span> ج.م • التوصيل: <span id="delivery-cost">0</span> ج.م</p>
+                </div>
+            </div>
+
+            <div class="total-row">
+                <span>الإجمالي النهائي:</span>
+                <strong><span id="cart-total">0</span> ج.م</strong>
+            </div>
+
+            <div class="payment-box">
+                <label style="font-weight: 700; display:block; margin-bottom: 6px;">💳 اختاري طريقة الدفع:</label>
+                <select id="payment-method" onchange="togglePaymentDetails()" class="payment-select">
+                    <option value="cod">💵 الدفع عند الاستلام (COD)</option>
+                    <option value="visa">💳 بطاقة بنكية (Visa / MasterCard)</option>
+                    <option value="cash">📱 محفظة إلكترونية (فودافون / اتصالات كاش)</option>
+                    <option value="instapay">⚡ إنستا باي (InstaPay)</option>
+                </select>
+
+                <div id="payment-details" class="payment-details">
+                    <p>💵 سيتم تحصيل المبلغ نقداً عند استلام الطلب.</p>
+                </div>
+            </div>
+
+            <button class="btn-primary full-width" onclick="checkout()">تأكيد وإتمام الطلب ✅</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
